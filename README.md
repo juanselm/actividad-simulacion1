@@ -49,7 +49,7 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    
    <details>
    <summary>Answer</summary>
-   Coloque aqui su respuerta
+   - Coloque aqui su respuerta
    <img src="images/process4.png" alt="Process 4" style="width: 50%; height: auto;">
    </details>
    <br>
@@ -58,7 +58,7 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    
    <details>
    <summary>Answer</summary>
-   Coloque aqui su respuerta
+   - Coloque aqui su respuerta
    <img src="images/process5.png" alt="Process 5" style="width: 50%; height: auto;">
    </details>
    <br>
