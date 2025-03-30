@@ -2,8 +2,9 @@
 
 |Integrante|correo|usuario github|
 |---|---|---|
-|Nombre completo integrante 1|correo integrante 1|gihub user integrante 1|
+|Juan Sebastian Loaiza Mazo|correo integrante 1|gihub user integrante 1|
 |Nombre completo integrante 2|correo integrante 2|gihub user integrante 2|
+|Nombre completo integrante 3|correo integrante 3|gihub user integrante 3|
 
 ## Instrucciones
 
@@ -49,6 +50,7 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    <details>
    <summary>Answer</summary>
    Coloque aqui su respuerta
+   <img src="images/process4.png" alt="Process 4" style="width: 50%; height: auto;">
    </details>
    <br>
 
@@ -57,6 +59,7 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    <details>
    <summary>Answer</summary>
    Coloque aqui su respuerta
+   <img src="images/process5.png" alt="Process 5" style="width: 50%; height: auto;">
    </details>
    <br>
 
