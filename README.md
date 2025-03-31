@@ -64,6 +64,8 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    - **PID 1:** Este proceso ejecuta instrucciones sobre la CPU.
    - **SWITCH_ON_END:** Esta opción usada en el comando indica que solo puede ser intercambiado los procesos cuan se termine la ejecución del primero.
 
+   <br>
+
    ||Tiempo 1|Tiempo 2-6|Tiempo 7|Tiempo 8-11|
    |---|---|---|---|---|
    |**PID 0**|Está en ejecución con una operación de I/O.|Permanece en estado BLOCKED|Finaliza su proceso I/O|Ha finalizado (DONE).|
