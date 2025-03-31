@@ -2,7 +2,7 @@
 
 |Integrante|correo|usuario github|
 |---|---|---|
-|Juan Sebastian Loaiza Mazo|correo integrante 1|gihub user integrante 1|
+|Juan Sebastian Loaiza Mazo|juans.loaiza@udea.edu.co|juanselm|
 |Nombre completo integrante 2|correo integrante 2|gihub user integrante 2|
 |Nombre completo integrante 3|correo integrante 3|gihub user integrante 3|
 
