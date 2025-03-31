@@ -57,6 +57,8 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
 
    <img src="images/process4.png" alt="Process 5" style="display: block; margin: 0 auto; width: 80%; height: auto;">
 
+   <br>
+
    ##### Explicación.
 
    Al ejecutat el comando anterior se simulan dos procesos:
@@ -66,10 +68,10 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
 
    <br>
 
-   ||Tiempo 1|Tiempo 2-6|Tiempo 7|Tiempo 8-11|
+   |PID|Tiempo 1|Tiempo 2-6|Tiempo 7|Tiempo 8-11|
    |---|---|---|---|---|
-   |**PID 0**|Está en ejecución con una operación de I/O.|Permanece en estado BLOCKED|Finaliza su proceso I/O|Ha finalizado (DONE).|
-   |**PID 1**|Está READY esperando su turno|Permanece READY sin ejecución.|Continua en estado Ready|Inicia ejecución en CPU hasta terminar|
+   |**0**|Está en ejecución con una operación de I/O.|Permanece en estado BLOCKED|Finaliza su proceso I/O|Ha finalizado (DONE).|
+   |**1**|Está READY esperando su turno|Permanece READY sin ejecución.|Continua en estado Ready|Inicia ejecución en CPU hasta terminar|
 
    ##### Conclusión:
    El cambio de proceso solo ocurre cuando uno termina, en este caso hasta que termine el PID 0. Esto causa ineficiencia, ya que la CPU está inactiva durante el tiempo en que PID 0 está bloqueado y luego de eso el PID 1 puede iniciar su ejecución.
@@ -88,6 +90,25 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    ```
 
    <img src="images/process5.png" alt="Process 5" style="display: block; margin: 0 auto; width: 80%; height: auto;">
+   <br>
+
+   ##### Explicación.
+
+   Al ejecutat el comando anterior se simulan dos procesos:
+   - **PID 0:** Este proceso ejecuta una operación de I/O.
+   - **PID 1:** Este proceso ejecuta instrucciones sobre la CPU.
+   - **SWITCH_ON_IO:** Cuando uno de los procesos entra en estado I/O se puede cambiar de proceso.
+
+   <br>
+
+   |PID|Tiempo 1|Tiempo 2-6|Tiempo 7|Tiempo 8-11|
+   |---|---|---|---|---|
+   |**0**|Empieza la ejecución con una operación de I/O|Se queda en estado BLOCKED esperando su I/O.|Permanece bloqueado esperando el fin de su I/O. |finaliza su proceso I/O|
+   |**1**|Inicia su estado en READY|Usa la CPU (RUN: cpu) sin necesidad de que PID 0 halla terminado.|Finaliza su proceso|Ya ha finalizado su proceso|
+
+   ##### Conclusión:
+   En este caso se optimiza el uso de la CPU, ya que mientras PID 0 está bloqueado esperando la I/O, PID 1 usa la CPU, evitando tiempos muertos.
+
    </details>
    <br>
 
