@@ -51,11 +51,27 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    <summary>Answer</summary>
    <p><b>Comando</b></p>
 
-   ```
+   ```python
    python3 process-run.py -l 1:0,4:100 -c -S SWITCH_ON_END
    ```
 
    <img src="images/process4.png" alt="Process 5" style="display: block; margin: 0 auto; width: 80%; height: auto;">
+
+   ##### Explicación.
+
+   Al ejecutat el comando anterior se simulan dos procesos:
+   - **PID 0:** Este proceso ejecuta una operación de I/O.
+   - **PID 1:** Este proceso ejecuta instrucciones sobre la CPU.
+   - **SWITCH_ON_END:** Esta opción usada en el comando indica que solo puede ser intercambiado los procesos cuan se termine la ejecución del primero.
+
+   ||Tiempo 1|Tiempo 2-6|Tiempo 7|Tiempo 8-11|
+   |---|---|---|---|---|
+   |**PID 0**|Está en ejecución con una operación de I/O.|Permanece en estado BLOCKED|Finaliza su proceso I/O|Ha finalizado (DONE).|
+   |**PID 1**|Está READY esperando su turno|Permanece READY sin ejecución.|Continua en estado Ready|Inicia ejecución en CPU hasta terminar|
+
+   ##### Conclusión:
+   El cambio de proceso solo ocurre cuando uno termina, en este caso hasta que termine el PID 0. Esto causa ineficiencia, ya que la CPU está inactiva durante el tiempo en que PID 0 está bloqueado y luego de eso el PID 1 puede iniciar su ejecución.
+
    </details>
    <br>
 
@@ -65,7 +81,7 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    <summary>Answer</summary>
    <p><b>Comando</b></p>
 
-   ```
+   ```python
    python3 process-run.py -l 1:0,4:100 -c -S SWITCH_ON_IO
    ```
 
