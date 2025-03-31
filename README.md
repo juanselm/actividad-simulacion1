@@ -49,8 +49,13 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    
    <details>
    <summary>Answer</summary>
-   <p>Coloque aqui su respuesta</p>
-   <img src="images/process5.png" alt="Process 5" style="display: block; margin: 0 auto; width: 50%; height: auto;">
+   <p><b>Comando</b></p>
+
+   ```
+      python3 process-run.py -l 1:0,4:100 -c -S SWITCH_ON_END
+   ```
+
+   <img src="images/process4.png" alt="Process 5" style="display: block; margin: 0 auto; width: 50%; height: auto;">
    </details>
    <br>
 
@@ -58,7 +63,12 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    
    <details>
    <summary>Answer</summary>
-   <p>Coloque aqui su respuesta</p>
+   <p><b>Comando</b></p>
+
+   ```
+      python3 process-run.py -l 1:0,4:100 -c -S SWITCH_ON_IO
+   ```
+
    <img src="images/process5.png" alt="Process 5" style="display: block; margin: 0 auto; width: 50%; height: auto;">
    </details>
    <br>
