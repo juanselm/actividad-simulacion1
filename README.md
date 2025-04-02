@@ -3,7 +3,7 @@
 |Integrante|correo|usuario github|
 |---|---|---|
 |Juan Sebastian Loaiza Mazo|juans.loaiza@udea.edu.co|juanselm|
-|Nombre completo integrante 2|correo integrante 2|gihub user integrante 2|
+|Sulay Gisela Martínez Barreto|sulay.martinez@udea.edu.co|SheeleM|
 |Nombre completo integrante 3|correo integrante 3|gihub user integrante 3|
 
 ## Instrucciones
