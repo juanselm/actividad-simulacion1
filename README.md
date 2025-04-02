@@ -25,9 +25,44 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    
    <details>
    <summary>Answer</summary>
-   Coloque aqui su respuerta
+   <p><b>Comando</b></p>
+
+   ```python
+    python3 process-run.py -l 5:100,5:100 -c -p
+   ```
+
+     <img src="images/process1.png" alt="Process 1" style="display: block; margin: 0 auto; width: 80%; height: auto;">
+
+   <br>
+
+   ##### Explicación.
+
+
+   Al ejecutat el comando anterior se simulan dos procesos:
+   - **PID 0:** Ejecuta 5 instrucciones en la CPU sin realizar ninguna operación de entrada/salida (I/O). Comienza su ejecución de inmediato.
+   - **PID 1:** También ejecuta 5 instrucciones en la CPU, pero su ejecución no está condicionada a que el proceso PID 0 termine primero. En este caso, el planificador decide cómo alternar la ejecución de ambos procesos.
+   - **-c (Compute Statistics):** Muestra estadísticas detalladas al final de la ejecución, incluyendo el tiempo total de ejecución, el tiempo ocupado de la CPU y el tiempo ocupado en I/O.
+
+     Ayuda a verificar si la CPU estuvo en uso todo el tiempo y si hubo tiempos muertos.
+   - **-p (Print Execution Details):**
+   Imprime información sobre el estado de los procesos en cada ciclo.
+
+   <br>
+   
+   |PID|Tiempo 1|Tiempo 2-6|Tiempo 7|Tiempo 8-11|
+   |---|---|---|---|---|
+   |**0**|Está en ejecución con una operación de I/O.|Permanece en estado BLOCKED|Finaliza su proceso I/O|Ha finalizado (DONE).|
+   |**1**|Está READY esperando su turno|Permanece READY sin ejecución.|Continua en estado Ready|Inicia ejecución en CPU hasta terminar|
+
+   ##### Conclusión:
+   Total Time 10 → La simulación duró 10 ciclos. <br>
+   CPU Busy 10 (100%) → La CPU estuvo ocupada todo el tiempo, sin tiempos muertos.<br>
+   IO Busy 0 (0%) → No hubo operaciones de entrada/salida (I/O).
+
    </details>
    <br>
+
+   
 
 2. Now run with these flags: `./process-run.py -l 4:100,1:0`. These flags specify one process with 4 instructions (all to use the CPU), and one that simply issues an I/O and waits for it to be done. How long does it take to complete both processes? Use `-c` and `-p` to find out if you were right. 
    
