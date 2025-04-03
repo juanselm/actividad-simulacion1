@@ -49,15 +49,19 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
 
    <br>
    
-   |PID|Tiempo 1|Tiempo 2-6|Tiempo 7|Tiempo 8-11|
-   |---|---|---|---|---|
-   |**0**|Está en ejecución con una operación de I/O.|Permanece en estado BLOCKED|Finaliza su proceso I/O|Ha finalizado (DONE).|
-   |**1**|Está READY esperando su turno|Permanece READY sin ejecución.|Continua en estado Ready|Inicia ejecución en CPU hasta terminar|
+   ##### Estado de los Procesos en la Simulación
+
+    | PID | Tiempo 1-5| Tiempo 6| Tiempo 7-10 |
+    |---|---|---|---|
+    | **0** | Está en `RUN: cpu` | El proceso 0 ha terminado (`DONE`). | Ha finalizado (`DONE`). |
+    | **1** | Está `READY` esperando su turno. | Ahora el proceso 1 empieza a ejecutarse (`RUN: cpu`). | El proceso 1 sigue ejecutando CPU hasta que termina. |
+
 
    ##### Conclusión:
-   Total Time 10 → La simulación duró 10 ciclos. <br>
-   CPU Busy 10 (100%) → La CPU estuvo ocupada todo el tiempo, sin tiempos muertos.<br>
-   IO Busy 0 (0%) → No hubo operaciones de entrada/salida (I/O).
+   - Tiempo total 10 → La simulación duró 10 ciclos. <br>
+   - CPU ocupada:10 (100%) → La CPU estuvo ocupada todo el tiempo, sin tiempos muertos.<br>
+   - IO ocupada 0 (0%) → No hubo operaciones de entrada/salida (I/O).
+   - La planificación utilizada es FIFO porque los procesos se ejecutan en el orden en que llegan sin interrupciones.
 
    </details>
    <br>
