@@ -70,11 +70,50 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
 
 2. Now run with these flags: `./process-run.py -l 4:100,1:0`. These flags specify one process with 4 instructions (all to use the CPU), and one that simply issues an I/O and waits for it to be done. How long does it take to complete both processes? Use `-c` and `-p` to find out if you were right. 
    
+ 
    <details>
    <summary>Answer</summary>
-   Coloque aqui su respuerta
+   <p><b>Comando</b></p>
+
+   ```python
+     python3 process-run.py -l 4:100,1:0 -c -p
+   ```
+
+     <img src="images/process2.png" alt="Process 1" style="display: block; margin: 0 auto; width: 80%; height: auto;">
+
+   <br>
+
+   ##### Explicación.
+
+
+   Al ejecutar el comando anterior se simulan dos procesos en 11 intervalos tiempo:
+   - **PID 0:** ejecuta 4 instrucciones que usan CPU
+   - **PID 1:** Tiene 1 instrucción de I/O (RUN:io), luego espera a que termine. 
+   <br>
+   
+   ##### Estado de los Procesos en la Simulación
+
+   | PID | Tiempo 1-4 | Tiempo 5-10 | Tiempo 11 |
+   |-----|------------|-------------|-----------|
+   | **0**   | Está en `RUN:cpu`, ejecutando normalmente. | Termina su ejecución (`DONE`). | Ya ha finalizado. |
+   | **1**   | Está en `READY`, esperando su turno. | Inicia operación de E/S (`RUN:io`) y luego permanece `BLOCKED` esperando que finalice. | Termina operación de E/S (`RUN:io_done`) y finaliza (`DONE`). |
+
+
+
+   ##### Conclusión:
+   - El proceso PID 0 fue muy rápido porque solo necesitaba usar la CPU. Terminó en 4 unidades de tiempo sin interrupciones. <br>
+   - El proceso PID 1, aunque solo tenía una instrucción, tardó mucho más porque era una operación de entrada/salida (I/O), lo cual lo dejó bloqueado durante 5 unidades de tiempo esperando respuesta.<br>
+   - El sistema completo tomó 11 unidades de tiempo para ejecutar ambos procesos, principalmente porque PID 1 estuvo bloqueado esperando que finalizara su I/O.
+   - Esto demuestra que las operaciones de I/O pueden causar demoras importantes, incluso cuando los procesos son 
+   cortos.
+   - El CPU estuvo ocupado durante 6 de los 11 tiempos (54.55%), lo cual es un uso razonablemente bueno.
+   - No hubo tiempos muertos de CPU, es decir, en cada unidad de tiempo hubo algún proceso en ejecución o esperando IO, lo cual implica un buen aprovechamiento.
+   - La unidad de entrada/salida (IO) estuvo activa durante 5 de los 11 tiempos (45.45%), cuando el proceso 1 se encontraba esperando la finalización de su operación de IO.
+   - El IO fue ejecutado en paralelo al tiempo que el CPU finalizaba con PID 0, mostrando una buena sincronización entre CPU e IO.
+
    </details>
    <br>
+
 
 3. Switch the order of the processes: `-l 1:0,4:100`. What happens now? Does switching the order matter? Why? (As always, use `-c` and `-p` to see if you were right)
    
