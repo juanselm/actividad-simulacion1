@@ -117,11 +117,44 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
 
 3. Switch the order of the processes: `-l 1:0,4:100`. What happens now? Does switching the order matter? Why? (As always, use `-c` and `-p` to see if you were right)
    
+ 
    <details>
    <summary>Answer</summary>
-   Coloque aqui su respuerta
+   <p><b>Comando</b></p>
+
+   ```python
+     python3 ./process-run.py -l 1:0,4:100 -c -p
+
+   ```
+
+     <img src="images/process3.png" alt="Process 1" style="display: block; margin: 0 auto; width: 80%; height: auto;">
+
+   <br>
+
+   ##### Explicación.
+
+
+   Al ejecutar este comando se simulan dos procesos en 7 intervalos de tiempo:
+   - **PID 0:** Tiene 1 instrución de I/O RUN, luego eespera a que termine
+   - **PID 1:** Ejecuta 4 intrucciones que usan CPU. 
+   <br>
+   
+   ##### Estado de los Procesos en la Simulación
+
+   | PID | Tiempo 1 | Tiempo 2-5 | Tiempo 6 | Tiempo 7 |
+   |-----|----------|------------|----------|----------|
+   | **0** | Inicia operación de E/S (`RUN:io`) | Permanece `BLOCKED` esperando que finalice su operación I/O | Sigue `BLOCKED` | Termina operación de E/S (`RUN:io_done`) y finaliza (`DONE`) |
+   | **1** | Está en `READY`, esperando su turno | Ejecuta sus instrucciones de CPU (`RUN:cpu`) | Termina su ejecución (`DONE`) | Ya ha finalizado |
+
+
+   ##### Conclusión:
+   - Al ejecutar -l 1:0,4:100, el sistema operativo mostró una gestión eficiente mediante multiprogramación.
+   - Cuando el primer proceso (PID 0) se bloqueó por I/O, el sistema ejecutó el segundo (PID 1), que usaba CPU. Así, ambos avanzaron en paralelo, logrando un uso eficiente del CPU (85.71%) y del I/O (71.43%).
+   - Esto demuestra la efectividad de la política "SWITCH ON IO", que cambia a otro proceso cuando uno se bloquea, reduciendo tiempos muertos y mejorando el rendimiento.
+   - El orden de los procesos influye directamente en la eficiencia del sistema, permitiendo una mejor utilización de los recursos
    </details>
    <br>
+
 
 4. We'll now explore some of the other flags. One important flag is `-S`, which determines how the system reacts when a process issues an I/O. With the flag set to SWITCH ON END, the system will NOT switch to another process while one is doing I/O, instead waiting until the process is completely finished. What happens when you run the following two processes (`-l 1:0,4:100 -c -S SWITCH ON END`), one doing I/O and the other doing CPU work?
    
