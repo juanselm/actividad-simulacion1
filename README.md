@@ -1,10 +1,10 @@
 # Actividad de seguimiento - Simulación 1
 
 |Integrante|correo|usuario github|
-|---|---|---|
+|----------|------|--------------|
 |Juan Sebastian Loaiza Mazo|juans.loaiza@udea.edu.co|juanselm|
 |Sulay Gisela Martínez Barreto|sulay.martinez@udea.edu.co|SheeleM|
-|Nombre completo integrante 3|correo integrante 3|gihub user integrante 3|
+|Mateo Herrera Londoño|Mateo.herrera2@udea.edu.co|MateoHL|
 
 ## Instrucciones
 
