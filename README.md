@@ -184,7 +184,8 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    |**1**|Está READY esperando su turno|Permanece READY sin ejecución.|Continua en estado Ready|Inicia ejecución en CPU hasta terminar|
 
    ##### Conclusión:
-   El cambio de proceso solo ocurre cuando uno termina, en este caso hasta que termine el PID 0. Esto causa ineficiencia, ya que la CPU está inactiva durante el tiempo en que PID 0 está bloqueado y luego de eso el PID 1 puede iniciar su ejecución.
+   El cambio de proceso solo ocurre cuando uno termina, en este caso hasta que termine el PID 0. Esto causa ineficiencia, ya que la CPU está inactiva durante el tiempo en que PID 0 está bloqueado y luego de eso 
+   el PID 1 puede iniciar su ejecución.
 
    </details>
    <br>
@@ -226,6 +227,7 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    
    <details>
    <summary>Answer</summary>
+
    ```python
    python3 process-run.py -l 3:0,5:100,5:100,5:100 -S SWITCH_ON_IO -c -p -I IO_RUN_LATER
    ```
@@ -233,28 +235,33 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    <br>
 
    ##### Explicación:
-   se definen 4 procesos:
-
+   
+   Se definen 4 procesos:
    - PID 0 comienza con una operación de entrada/salida (I/O), y luego alterna tres ráfagas de CPU de 5 unidades de tiempo.
    - PID 1, 2 y 3 ejecutan únicamente ráfagas de CPU, cada uno con 5 unidades.
 
    Los modificadores usados son:
-
    - -S SWITCH_ON_IO: el planificador realiza un cambio de contexto cuando un proceso entra en I/O.
    - -I IO_RUN_LATER: cuando un proceso finaliza su operación de I/O, no se ejecuta inmediatamente, sino que se coloca al final de la cola de listos.
    - -c -p: muestran estadísticas y el patrón de ejecución completo.
 
-   Durante la simulación, el proceso 0 empieza con una operación de I/O (RUN:io) y se bloquea (BLOCKED). En ese momento, gracias al planificador, la CPU cambia rápidamente a los procesos listos (PID 1, 2 y 3), que se ejecutan de manera continua hasta completarse.
+   Durante la simulación, el proceso 0 empieza con una operación de I/O (RUN:io) y se bloquea (BLOCKED). En ese momento, gracias al planificador, la CPU cambia rápidamente a los procesos listos (PID 1, 2 y 3),      que se ejecutan de manera continua hasta completarse.
 
-   Cuando el PID 0 termina su I/O, no se ejecuta inmediatamente, sino que se reubica al final de la cola por efecto de IO_RUN_LATER. Por eso, solo vuelve a ejecutarse después de que los demás procesos hayan terminado. Esto mismo ocurre con sus siguientes operaciones de I/O, generando periodos de espera incluso cuando el proceso ya está listo para continuar.
+   Cuando el PID 0 termina su I/O, no se ejecuta inmediatamente, sino que se reubica al final de la cola por efecto de IO_RUN_LATER. Por eso, solo vuelve a ejecutarse después de que los demás procesos hayan 
+   terminado. Esto mismo ocurre con sus siguientes operaciones de I/O, generando periodos de espera incluso cuando el proceso ya está listo para continuar.
 
    **¿Se están utilizando eficazmente los recursos del sistema?**
-   En términos generales, el sistema logra un buen uso de recursos, con un uso de CPU del 67.74% y un uso de I/O del 48.39%. La CPU no queda ociosa mientras haya procesos listos, y se mantiene activa durante la mayoría de la ejecución.
+   En términos generales, el sistema logra un buen uso de recursos, con un uso de CPU del 67.74% y un uso de I/O del 48.39%. La CPU no queda ociosa mientras haya procesos listos, y se mantiene activa durante la 
+   mayoría de la ejecución.
 
-   Sin embargo, la política IO_RUN_LATER introduce una cierta ineficiencia: los procesos que terminan su operación de I/O no se ejecutan inmediatamente, lo que puede llevar a pequeños periodos donde no hay procesos listos, a pesar de que uno ya está preparado para continuar. Esto genera tiempos muertos evitables tanto en CPU como en I/O, y se nota especialmente hacia el final de la simulación, cuando ya solo queda el PID 0.
+   Sin embargo, la política IO_RUN_LATER introduce una cierta ineficiencia: los procesos que terminan su operación de I/O no se ejecutan inmediatamente, lo que puede llevar a pequeños periodos donde no hay 
+   procesos listos, a pesar de que uno ya está preparado para continuar. Esto genera tiempos muertos evitables tanto en CPU como en I/O, y se nota especialmente hacia el final de la simulación, cuando ya solo 
+   queda el PID 0.
 
    ##### Conclusión:
-   Aunque el rendimiento general del sistema es aceptable, la decisión de postergar la ejecución de un proceso que acaba de finalizar su I/O limita la eficiencia global. Esta combinación de parámetros muestra cómo una política aparentemente simple puede afectar el aprovechamiento de los recursos, y resalta la importancia de tomar decisiones inteligentes en la planificación, especialmente en sistemas donde la interacción entre procesos y dispositivos de entrada/salida es constante.
+   Aunque el rendimiento general del sistema es aceptable, la decisión de postergar la ejecución de un proceso que acaba de finalizar su I/O limita la eficiencia global. Esta combinación de parámetros muestra 
+   cómo una política aparentemente simple puede afectar el aprovechamiento de los recursos, y resalta la importancia de tomar decisiones inteligentes en la planificación, especialmente en sistemas donde la 
+   interacción entre procesos y dispositivos de entrada/salida es constante.
 
    </details>
    <br>
@@ -263,6 +270,7 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    
    <details>
    <summary>Answer</summary>
+      
    ```python
    python3 process-run.py -l 3:0,5:100,5:100,5:100 -S SWITCH_ON_IO -c -p -I IO_RUN_IMMEDIATE
    ```
@@ -270,21 +278,24 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    <br>
 
    ##### Explicación:
+   
    Se definen 4 procesos:
-
    - PID 0 comienza con una operación de entrada/salida (I/O) y luego ejecuta tres ráfagas de CPU.
    - PID 1, 2 y 3 ejecutan tareas de CPU de 5 unidades de tiempo cada uno.
    - Se utiliza -S SWITCH_ON_IO, lo que hace que el planificador cambie de contexto cuando un proceso entra en I/O.
    - La gran diferencia es el parámetro -I IO_RUN_IMMEDIATE, que hace que el proceso que finaliza una operación de I/O se ejecute      inmediatamente, dándole prioridad sobre otros procesos listos.
 
-   Durante la simulación, el PID 0 inicia con una operación de I/O y se bloquea. La CPU entonces ejecuta el PID 1. Una vez que el PID 0 termina su I/O, es reinsertado inmediatamente en la CPU antes que los demás procesos listos, y realiza su ráfaga de CPU.
+   Durante la simulación, el PID 0 inicia con una operación de I/O y se bloquea. La CPU entonces ejecuta el PID 1. Una vez que el PID 0 termina su I/O, es reinsertado inmediatamente en la CPU antes que los demás 
+   procesos listos, y realiza su ráfaga de CPU.
 
-   Este patrón se repite: el PID 0 ejecuta una ráfaga, vuelve a entrar a I/O, y cuando esta finaliza, vuelve a ejecutarse de inmediato. Así, se alternan periodos de CPU e I/O de forma más intercalada, hasta que el proceso 0 finaliza. Solo después se ejecutan los PIDs 2 y 3.
+   Este patrón se repite: el PID 0 ejecuta una ráfaga, vuelve a entrar a I/O, y cuando esta finaliza, vuelve a ejecutarse de inmediato. Así, se alternan periodos de CPU e I/O de forma más intercalada, hasta que 
+   el proceso 0 finaliza. Solo después se ejecutan los PIDs 2 y 3.
 
    **¿Qué diferencia este comportamiento respecto a la pregunta 6?**
+   
    La diferencia principal es la prioridad que se le da al proceso que termina su operación de I/O:
-
-   - En la pregunta 6 (IO_RUN_LATER), el proceso que completaba su I/O iba al final de la cola de listos, y debía esperar su turno nuevamente. Esto introducía demoras innecesarias y afectaba la eficiencia del sistema.
+   - En la pregunta 6 (IO_RUN_LATER), el proceso que completaba su I/O iba al final de la cola de listos, y debía esperar su turno nuevamente. Esto introducía demoras innecesarias y afectaba la eficiencia del 
+     sistema.
    - En la pregunta 7 (IO_RUN_IMMEDIATE), el proceso que termina I/O se ejecuta inmediatamente, lo cual reduce los tiempos de espera y mejora el flujo entre I/O y CPU.
 
    Este cambio tiene un impacto directo en el aprovechamiento de recursos:
@@ -302,13 +313,13 @@ This program, [`process-run.py`](process-run.py), allows you to see how process 
    Porque el proceso que acaba de terminar una operación de entrada/salida probablemente ya tiene trabajo pendiente (como una nueva ráfaga de CPU), y está listo para continuar su ejecución inmediatamente.
 
    Al ejecutarlo de nuevo sin esperar, se logra:
-
    - Mayor fluidez en la ejecución, evitando que el proceso quede en espera cuando ya podría seguir trabajando.
    - Reducción de tiempos de espera innecesarios, tanto para la CPU como para los dispositivos de I/O.
    - Mejor utilización del sistema, como se refleja en los resultados de esta simulación.
 
    ##### Conclusión:
-   La política IO_RUN_IMMEDIATE demuestra ser mucho más eficiente que IO_RUN_LATER. Al dar prioridad al proceso que termina una operación de I/O, el sistema logra mayor paralelismo, menos tiempo total de ejecución y mejor aprovechamiento de los recursos.
+   La política IO_RUN_IMMEDIATE demuestra ser mucho más eficiente que IO_RUN_LATER. Al dar prioridad al proceso que termina una operación de I/O, el sistema logra mayor paralelismo, menos tiempo total de 
+   ejecución y mejor aprovechamiento de los recursos.
 
    Este caso es un buen ejemplo de cómo una pequeña decisión en la planificación puede tener un gran impacto en el rendimiento general del sistema.
    </details>
